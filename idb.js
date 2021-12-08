@@ -1,7 +1,10 @@
-let db;
-let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-let IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+let db = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
 async function init() {
+    if (!db) {
+        console.log('This browser doesn\'t support IndexedDB');
+        return;
+    }
     db = await idb.openDb('books', 1, db => {
         db.createObjectStore('books', {keyPath: 'name'});
     });
@@ -41,7 +44,7 @@ async function addBook() {
         await list();
     } catch(err) {
         if (err.name == 'ConstraintError') {
-            alert("Such book exists already");
+            alert("Книга с таким id уже существует");
             await addBook();
         } else {
             throw err;
