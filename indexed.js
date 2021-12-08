@@ -1,5 +1,4 @@
 let db = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-let IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 
 async function addBook() {
     //to do check for value type
